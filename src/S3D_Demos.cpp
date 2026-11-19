@@ -131,17 +131,22 @@ public:
 		S3D_ClearColor(renderer, BLACK);
 		//S3D_DrawTriangleWireframes(renderer, triangle_vertices[0], triangle_vertices[1], triangle_vertices[2], RED);
 
-		for (size_t i = 0; i < plane_indices.size(); i += 3)
+		Matrix rotation = MatrixRotateY(50.0f * GetTime() * DEG2RAD);
+		for (size_t i = 0; i < sphere.indices.size(); i += 3)
 		{
-			uint16_t index0 = plane_indices[i + 0];
-			uint16_t index1 = plane_indices[i + 1];
-			uint16_t index2 = plane_indices[i + 2];
+			uint16_t index0 = sphere.indices[i + 0];
+			uint16_t index1 = sphere.indices[i + 1];
+			uint16_t index2 = sphere.indices[i + 2];
 
-			Vector3 ndc0 = plane_vertices[index0];
-			Vector3 ndc1 = plane_vertices[index1];
-			Vector3 ndc2 = plane_vertices[index2];
+			Vector3 ndc0 = sphere.positions[index0];
+			Vector3 ndc1 = sphere.positions[index1];
+			Vector3 ndc2 = sphere.positions[index2];
 
-			S3D_DrawTriangleWireframes(renderer, ndc0, ndc1, ndc2, RED);
+			ndc0 *= rotation;
+			ndc1 *= rotation;
+			ndc2 *= rotation;
+
+			S3D_DrawTriangleWireframes(renderer, ndc0, ndc1, ndc2, PURPLE);
 		}
 
 		// Render the sphere by sampling its index buffer by Thursday the 19th at midnight!
